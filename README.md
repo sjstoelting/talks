@@ -8,7 +8,7 @@ Target was to give the audience an overview about what one is able to do with Po
 fil
 
 ## JSON By The Other Elephant
-The talk was done at the [PHP Usergroup Berlin](http://bephpug.de/) on the 7th of July 2015.
+The talk was done at the [PHP Usergroup Berlin](http://www.bephpug.de/2015/07/07/july.html) on the 7th of July 2015.
 Target was to give an impression of what PostgreSQL is able to do with its JSON features.
 
 ### Data source used in this talk
