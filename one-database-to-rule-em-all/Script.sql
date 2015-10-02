@@ -42,12 +42,18 @@ CREATE EXTENSION sqlite_fdw;
 
 
 
+-- Dropping the SQLite server connections, just to show, that it does work
+DROP SERVER sqlite_server CASCADE;
+
+
+
 -- Create the mapping to the foreign SQLite file
 CREATE SERVER sqlite_server
 	FOREIGN DATA WRAPPER sqlite_fdw
 	OPTIONS (database '/var/sqlite/Chinook_Sqlite.sqlite');
 
-DROP FOREIGN TABLE sqlite_artist;
+
+
 -- Create the SQLite foreign table, column definitions have to match
 CREATE FOREIGN TABLE sqlite_artist(
 	"ArtistId" integer,
@@ -62,6 +68,7 @@ OPTIONS(
 
 --  Select some data
 SELECT * FROM sqlite_artist;
+
 
 
 
@@ -114,14 +121,18 @@ GROUP BY artist."Name"
 ;
 
 
+
 -- Creates a unique index on a mv
 CREATE UNIQUE INDEX mv_album_artist__artist ON mv_album_artist(artist);
--- Select the mv data
 
+
+
+-- Select the mv data
 SELECT *
 FROM mv_album_artist
 WHERE artist = 'AC/DC'
 ;
+
 
 
 -- Insert data calculated from foreign tables using PostgreSQL features into another foreign table
@@ -142,8 +153,19 @@ GROUP BY album.new_album_id
 ;
 
 
+
+-- Select data from the materialized view
+SELECT *
+FROM mv_album_artist
+-- WHERE artist = 'AC/DC'
+ORDER BY artist
+;
+
+
+
 -- Refresh the mv to see the recently added data
 REFRESH MATERIALIZED VIEW mv_album_artist;
+
 
 
 -- We can even delete data from foreign tables
@@ -153,8 +175,10 @@ WHERE "Title" = 'Back in Black'
 ;
 
 
-/* MySQL control statement
-SELECT count( * )
-FROM `Album`;
+
+/* MariaDB control statement
+SELECT count( * ) AS AlbumCount
+FROM `Album`
+;
 */
 
