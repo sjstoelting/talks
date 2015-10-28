@@ -182,3 +182,79 @@ FROM `Album`
 ;
 */
 
+
+
+-- Using PostgreSQL JSON with data from MariaDB and SQLite
+-- Step 1: Albums with tracks as JSON
+WITH albums AS
+	(
+		SELECT a."ArtistId" AS artist_id
+			, a."Title" AS album_title
+			, array_agg(t."Name") AS album_tracks
+		FROM mysql_album AS a
+			INNER JOIN "Track" AS t
+				ON a."AlbumId" = t."AlbumId"
+		GROUP BY a."ArtistId"
+			, a."Title"
+	)
+SELECT row_to_json(albums) AS album_tracks
+FROM albums
+;
+
+
+-- Step 2 Abums including tracks with aritsts
+WITH albums AS
+	(
+		SELECT a."ArtistId" AS artist_id
+			, a."Title" AS album_title
+			, array_agg(t."Name") AS album_tracks
+		FROM mysql_album AS a
+			INNER JOIN "Track" AS t
+				ON a."AlbumId" = t."AlbumId"
+		GROUP BY a."ArtistId"
+			, a."Title"
+	)
+, js_albums AS
+	(
+		SELECT row_to_json(albums) AS album_tracks
+		FROM albums
+	)
+SELECT a."Name" AS artist
+	, al.album_tracks AS albums_tracks
+FROM sqlite_artist AS a
+	INNER JOIN js_albums AS al
+		ON a."ArtistId" = CAST(al.album_tracks->>'artist_id' AS INT)
+;
+
+
+
+-- Step 3 Return one row for an artist with all albums
+WITH albums AS
+	(
+		SELECT a."ArtistId" AS artist_id
+			, a."Title" AS album_title
+			, array_agg(t."Name") AS album_tracks
+		FROM mysql_album AS a
+			INNER JOIN "Track" AS t
+				ON a."AlbumId" = t."AlbumId"
+		GROUP BY a."ArtistId"
+			, a."Title"
+	)
+, js_albums AS
+	(
+		SELECT row_to_json(albums) AS album_tracks
+		FROM albums
+	)
+, artist_albums AS
+	(
+		SELECT a."Name" AS artist
+			, array_agg(al.album_tracks) AS albums_tracks
+		FROM sqlite_artist AS a
+			INNER JOIN js_albums AS al
+				ON a."ArtistId" = CAST(al.album_tracks->>'artist_id' AS INT)
+		GROUP BY a."Name"
+	)
+SELECT row_to_json(artist_albums) AS artist_data
+FROM artist_albums
+;
+
