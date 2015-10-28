@@ -229,6 +229,7 @@ FROM sqlite_artist AS a
 
 
 -- Step 3 Return one row for an artist with all albums
+CREATE VIEW v_artist_data AS
 WITH albums AS
 	(
 		SELECT a."ArtistId" AS artist_id
@@ -254,7 +255,14 @@ WITH albums AS
 				ON a."ArtistId" = CAST(al.album_tracks->>'artist_id' AS INT)
 		GROUP BY a."Name"
 	)
-SELECT row_to_json(artist_albums) AS artist_data
+SELECT CAST(row_to_json(artist_albums) AS JSONB) AS artist_data
 FROM artist_albums
 ;
 
+
+
+-- SELECT data from that view, that does querying PostgreSQL, MariaDB, and SQLite tables in one SQL statement
+SELECT jsonb_pretty(artist_data) pretty_artistdata
+FROM v_artist_data
+WHERE artist_data->>'artist' = 'Miles Davis'
+;
