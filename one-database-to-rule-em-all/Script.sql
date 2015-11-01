@@ -1,4 +1,4 @@
-﻿-- Create the foreign data wrapper extension in the current database
+-- Create the foreign data wrapper extension in the current database
 CREATE EXTENSION mysql_fdw;
 
 
@@ -17,7 +17,7 @@ OPTIONS (username 'pg_test', password 'secret');
 
 
 
-DROP FOREIGN TABLE mysql_album;
+DROP FOREIGN TABLE mysql_album CASCADE;
 -- Create the MariaDB foreign table, column definitions have to match
 CREATE FOREIGN TABLE mysql_album(
 	"AlbumId" integer,
@@ -50,7 +50,8 @@ DROP SERVER sqlite_server CASCADE;
 -- Create the mapping to the foreign SQLite file
 CREATE SERVER sqlite_server
 	FOREIGN DATA WRAPPER sqlite_fdw
-	OPTIONS (database '/var/sqlite/Chinook_Sqlite.sqlite');
+	OPTIONS (database '/var/sqlite/Chinook_Sqlite.sqlite')
+;
 
 
 
@@ -157,7 +158,7 @@ GROUP BY album.new_album_id
 -- Select data from the materialized view
 SELECT *
 FROM mv_album_artist
--- WHERE artist = 'AC/DC'
+WHERE artist = 'AC/DC'
 ORDER BY artist
 ;
 
@@ -227,9 +228,9 @@ FROM sqlite_artist AS a
 ;
 
 
-
+DROP MATERIALIZED VIEW v_artist_data;
 -- Step 3 Return one row for an artist with all albums
-CREATE VIEW v_artist_data AS
+CREATE MATERIALIZED VIEW v_artist_data AS
 WITH albums AS
 	(
 		SELECT a."ArtistId" AS artist_id
@@ -260,9 +261,31 @@ FROM artist_albums
 ;
 
 
-
--- SELECT data from that view, that does querying PostgreSQL, MariaDB, and SQLite tables in one SQL statement
-SELECT jsonb_pretty(artist_data) pretty_artistdata
+CREATE MATERIALIZED VIEW mv_artist_data AS
+SELECT *
 FROM v_artist_data
-WHERE artist_data->>'artist' = 'Miles Davis'
 ;
+
+CREATE INDEX artist_data_gin ON mv_artist_data USING GIN(artist_data);
+
+
+-- SELECT data from that materialized view, that does querying 
+-- PostgreSQL, MariaDB, and SQLite tables in one SQL statement
+SELECT jsonb_pretty(artist_data) pretty_artistdata
+FROM mv_artist_data
+WHERE artist_data->>'artist' IN ('Miles Davis', 'AC/DC')
+;
+
+
+
+
+-- SELECT some data using JSON methods
+SELECT jsonb_pretty(artist_data#>'{albums_tracks}') AS all_albums
+	, jsonb_pretty(artist_data#>'{albums_tracks, 0}') AS tracks_0
+	, artist_data#>'{albums_tracks, 0, album_title}' AS title
+FROM mv_artist_data
+WHERE artist_data->'albums_tracks' @> '[{"album_title":"Miles Ahead"}]'
+;
+
+
+
