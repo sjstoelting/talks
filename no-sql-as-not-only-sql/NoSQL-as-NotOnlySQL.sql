@@ -138,8 +138,8 @@ ORDER BY 3, 4;
 
 
 -- DROP FUNCTION trigger_v_artist_data_insert() CASCADE;
--- Create a function, which will be used for INSERT on the view v_artrist_data
-CREATE OR REPLACE FUNCTION trigger_v_artist_data_insert()
+-- Create a function, which will be used for UPDATE on the view v_artrist_data
+CREATE OR REPLACE FUNCTION trigger_v_artist_data_update()
 	RETURNS trigger AS
 $BODY$
 	-- Data variables
@@ -187,9 +187,9 @@ $BODY$
 
 
 
--- The trigger will be fired instead of an INSERT statemen to save data
-CREATE TRIGGER v_artist_data_instead INSTEAD OF INSERT
+-- The trigger will be fired instead of an UPDATE statemen to save data
+CREATE TRIGGER v_artist_data_instead_update INSTEAD OF UPDATE
 	ON v_artist_data
 	FOR EACH ROW
-	EXECUTE PROCEDURE trigger_v_artist_data_insert()
+	EXECUTE PROCEDURE trigger_v_artist_data_update()
 ;
