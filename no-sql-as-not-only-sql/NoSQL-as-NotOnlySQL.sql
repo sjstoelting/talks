@@ -165,8 +165,8 @@ BEGIN
 	RETURN NEW;
 
 	EXCEPTION WHEN unique_violation THEN
-		RAISE NOTICE 'Sorry, but the user "%" does already exist, please use a different name', _Username;
-		RETURN 0;
+		RAISE NOTICE 'Sorry, but the something went wrong while trying to update artist data';
+		RETURN OLD;
 
 	WHEN others THEN
 		GET STACKED DIAGNOSTICS
