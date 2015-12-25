@@ -23,12 +23,14 @@ FROM albums
 WITH albums AS
 	(
 		SELECT a."ArtistId" AS artist_id
+			, t."AlbumId"  AS album_id
 			, a."Title" AS album_title
 			, array_agg(t."Name") AS album_tracks
 		FROM "Album" AS a
 			INNER JOIN "Track" AS t
 				ON a."AlbumId" = t."AlbumId"
 		GROUP BY a."ArtistId"
+			, t."AlbumId"
 			, a."Title"
 	)
 , js_albums AS
@@ -50,16 +52,18 @@ FROM sqlite_artist AS a
 
 -- DROP VIEW v_artist_data;
 -- Step 3 Return one row for an artist with all albums as VIEW
-CREATE OR REPLACE VIEW v_artist_data AS
+-- CREATE OR REPLACE VIEW v_artist_data AS
 WITH albums AS
 	(
 		SELECT a."ArtistId" AS artist_id
+			, t."AlbumId"  AS album_id
 			, a."Title" AS album_title
 			, array_agg(t."Name") AS album_tracks
 		FROM "Album" AS a
 			INNER JOIN "Track" AS t
 				ON a."AlbumId" = t."AlbumId"
 		GROUP BY a."ArtistId"
+			, t."AlbumId"
 			, a."Title"
 	)
 , js_albums AS
