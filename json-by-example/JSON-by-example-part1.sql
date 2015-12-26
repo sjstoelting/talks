@@ -1,17 +1,50 @@
--- Step 1: Albums with tracks as JSON
-WITH albums AS
+-- Step 1: Tracks as JSON with the album identifier
+WITH tracks AS
+	(
+		SELECT "AlbumId" AS album_id
+			, "TrackId" AS track_id
+			, "Name" AS track_name
+		FROM "Track"
+	)
+SELECT row_to_json(tracks) AS tracks
+FROM tracks
+;
+
+
+
+
+
+
+-- Step 2 Abums including tracks with aritst identifier
+WITH tracks AS
+	(
+		SELECT "AlbumId" AS album_id
+			, "TrackId" AS track_id
+			, "Name" AS track_name
+		FROM "Track"
+	)
+, json_tracks AS
+	(
+		SELECT row_to_json(tracks) AS tracks
+		FROM tracks
+	)
+, albums AS
 	(
 		SELECT a."ArtistId" AS artist_id
+			, a."AlbumId" AS album_id
 			, a."Title" AS album_title
-			, array_agg(t."Name") AS album_tracks
+			, array_agg(t.tracks) AS album_tracks
 		FROM "Album" AS a
-			INNER JOIN "Track" AS t
-				ON a."AlbumId" = t."AlbumId"
+			INNER JOIN json_tracks AS t
+				ON a."AlbumId" = (t.tracks->>'album_id')::int
 		GROUP BY a."ArtistId"
+			, a."AlbumId"
 			, a."Title"
 	)
-SELECT row_to_json(albums) AS album_tracks
+SELECT artist_id
+	, array_agg(row_to_json(albums)) AS album
 FROM albums
+GROUP BY artist_id
 ;
 
 
@@ -19,69 +52,52 @@ FROM albums
 
 
 
--- Step 2 Abums including tracks with aritsts
-WITH albums AS
-	(
-		SELECT a."ArtistId" AS artist_id
-			, t."AlbumId"  AS album_id
-			, a."Title" AS album_title
-			, array_agg(t."Name") AS album_tracks
-		FROM "Album" AS a
-			INNER JOIN "Track" AS t
-				ON a."AlbumId" = t."AlbumId"
-		GROUP BY a."ArtistId"
-			, t."AlbumId"
-			, a."Title"
-	)
-, js_albums AS
-	(
-		SELECT row_to_json(albums) AS album_tracks
-		FROM albums
-	)
-SELECT a."Name" AS artist
-	, al.album_tracks AS albums_tracks
-FROM sqlite_artist AS a
-	INNER JOIN js_albums AS al
-		ON a."ArtistId" = CAST(al.album_tracks->>'artist_id' AS INT)
-;
-
-
-
-
-
-
--- DROP VIEW v_artist_data;
+-- DROP VIEW v_json_artist_data;
 -- Step 3 Return one row for an artist with all albums as VIEW
--- CREATE OR REPLACE VIEW v_artist_data AS
-WITH albums AS
+CREATE OR REPLACE VIEW v_json_artist_data AS
+WITH tracks AS
+	(
+		SELECT "AlbumId" AS album_id
+			, "TrackId" AS track_id
+			, "Name" AS track_name
+		FROM "Track"
+	)
+, json_tracks AS
+	(
+		SELECT row_to_json(tracks) AS tracks
+		FROM tracks
+	)
+, albums AS
 	(
 		SELECT a."ArtistId" AS artist_id
-			, t."AlbumId"  AS album_id
+			, a."AlbumId" AS album_id
 			, a."Title" AS album_title
-			, array_agg(t."Name") AS album_tracks
+			, array_agg(t.tracks) AS album_tracks
 		FROM "Album" AS a
-			INNER JOIN "Track" AS t
-				ON a."AlbumId" = t."AlbumId"
+			INNER JOIN json_tracks AS t
+				ON a."AlbumId" = (t.tracks->>'album_id')::int
 		GROUP BY a."ArtistId"
-			, t."AlbumId"
+			, a."AlbumId"
 			, a."Title"
 	)
-, js_albums AS
+, json_albums AS
 	(
-		SELECT row_to_json(albums) AS album_tracks
+		SELECT artist_id
+			, array_agg(row_to_json(albums)) AS album
 		FROM albums
+		GROUP BY artist_id
 	)
-, artist_albums AS
+, artists AS
 	(
-		SELECT a."Name" AS artist
-			, array_agg(al.album_tracks) AS albums_tracks
+		SELECT a."ArtistId" AS artist_id
+			, a."Name" AS artist
+			, jsa.album AS albums
 		FROM "Artist" AS a
-			INNER JOIN js_albums AS al
-				ON a."ArtistId" = CAST(al.album_tracks->>'artist_id' AS INT)
-		GROUP BY a."Name"
+			INNER JOIN json_albums AS jsa
+				ON a."ArtistId" = jsa.artist_id
 	)
-SELECT CAST(row_to_json(artist_albums) AS JSONB) AS artist_data
-FROM artist_albums
+SELECT (row_to_json(artists))::jsonb AS artist_data
+FROM artists
 ;
 
 
@@ -91,7 +107,7 @@ FROM artist_albums
 
 -- Select data from the view
 SELECT *
-FROM v_artist_data
+FROM v_json_artist_data
 ;
 
 
@@ -100,8 +116,8 @@ FROM v_artist_data
 
 
 -- SELECT data from that VIEW, that does querying 
-SELECT jsonb_pretty(artist_data) pretty_artistdata
-FROM v_artist_data
+SELECT jsonb_pretty(artist_data)
+FROM v_json_artist_data
 WHERE artist_data->>'artist' IN ('Miles Davis', 'AC/DC')
 ;
 
@@ -110,14 +126,12 @@ WHERE artist_data->>'artist' IN ('Miles Davis', 'AC/DC')
 
 
 
--- SELECT some data that VIEW using JSON methods
-SELECT jsonb_pretty(artist_data#>'{albums_tracks}') AS all_albums
-	, jsonb_pretty(artist_data#>'{albums_tracks, 0}') AS tracks_0
-	, artist_data#>'{albums_tracks, 0, album_title}' AS title
-	, artist_data#>'{albums_tracks, 0, artist_id}' AS artist_id
-	, artist_data->>'artist' AS artist
-FROM v_artist_data
-WHERE artist_data->'albums_tracks' @> '[{"album_title":"Miles Ahead"}]'
+-- SELECT some data from that VIEW using JSON methods
+SELECT 	artist_data->>'artist' AS artist
+	, artist_data#>'{albums, 1, album_title}' AS album_title
+	, jsonb_pretty(artist_data#>'{albums, 1, album_tracks}') AS album_tracks
+FROM v_json_artist_data
+WHERE artist_data->'albums' @> '[{"album_title":"Miles Ahead"}]'
 ;
 
 
@@ -126,13 +140,14 @@ WHERE artist_data->'albums_tracks' @> '[{"album_title":"Miles Ahead"}]'
 
 
 -- Array to records
-SELECT jsonb_array_elements(artist_data#>'{albums_tracks}')->>'artist_id' AS artist_id
-	, artist_data->>'artist' AS artist  
-	, jsonb_array_elements(artist_data#>'{albums_tracks}')->>'album_title' AS ablum_title
-	, jsonb_array_elements(jsonb_array_elements(artist_data#>'{albums_tracks}')#>'{album_tracks}') AS song_titles
-FROM v_artist_data
-WHERE artist_data->'albums_tracks' @> '[{"artist_id":139}]'
-ORDER BY 3, 4;
+SELECT artist_data->>'artist_id' AS artist_id
+	, artist_data->>'artist' AS artist
+	, jsonb_array_elements(artist_data#>'{albums}')->>'album_title' AS album_title 
+	, jsonb_array_elements(jsonb_array_elements(artist_data#>'{albums}')#>'{album_tracks}')->>'track_name' AS song_titles
+FROM v_json_artist_data
+WHERE artist_data->>'artist' = 'Metallica'
+ORDER BY 2
+;
 
 
 
@@ -143,7 +158,7 @@ ORDER BY 3, 4;
 
 -- DROP FUNCTION trigger_v_artist_data_insert() CASCADE;
 -- Create a function, which will be used for UPDATE on the view v_artrist_data
-CREATE OR REPLACE FUNCTION trigger_v_artist_data_update()
+CREATE OR REPLACE FUNCTION trigger_v_json_artist_data_update()
 	RETURNS trigger AS
 $BODY$
 	-- Data variables
@@ -157,6 +172,8 @@ $BODY$
 BEGIN
 	-- Update table Artist
 	IF OLD.artist_data->>'artist' <> NEW.artist_data->>'artist' THEN
+		IF (IS NULL artist_data->>'artist_id') THEN
+			-- New Artist
 		UPDATE "Artist"
 		SET "Name" = NEW.artist_data->>'artist'
 		WHERE "ArtistId" = artist_data#>'{albums_tracks, 0, artist_id}';
