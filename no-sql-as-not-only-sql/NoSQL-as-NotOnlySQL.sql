@@ -38,7 +38,7 @@ WITH albums AS
 	)
 SELECT a."Name" AS artist
 	, al.album_tracks AS albums_tracks
-FROM sqlite_artist AS a
+FROM "Artist" AS a
 	INNER JOIN js_albums AS al
 		ON a."ArtistId" = CAST(al.album_tracks->>'artist_id' AS INT)
 ;
