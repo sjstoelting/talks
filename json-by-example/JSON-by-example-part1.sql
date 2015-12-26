@@ -146,7 +146,7 @@ SELECT artist_data->>'artist_id' AS artist_id
 	, jsonb_array_elements(jsonb_array_elements(artist_data#>'{albums}')#>'{album_tracks}')->>'track_name' AS song_titles
 FROM v_json_artist_data
 WHERE artist_data->>'artist' = 'Metallica'
-ORDER BY 2
+ORDER BY 3
 ;
 
 
@@ -156,7 +156,7 @@ ORDER BY 2
 
 
 
--- DROP FUNCTION trigger_v_artist_data_insert() CASCADE;
+-- DROP FUNCTION trigger_v_json_artist_data_update() CASCADE;
 -- Create a function, which will be used for UPDATE on the view v_artrist_data
 CREATE OR REPLACE FUNCTION trigger_v_json_artist_data_update()
 	RETURNS trigger AS
