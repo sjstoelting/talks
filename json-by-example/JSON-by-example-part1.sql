@@ -172,11 +172,9 @@ $BODY$
 BEGIN
 	-- Update table Artist
 	IF OLD.artist_data->>'artist' <> NEW.artist_data->>'artist' THEN
-		IF (IS NULL artist_data->>'artist_id') THEN
-			-- New Artist
 		UPDATE "Artist"
 		SET "Name" = NEW.artist_data->>'artist'
-		WHERE "ArtistId" = artist_data#>'{albums_tracks, 0, artist_id}';
+		WHERE "ArtistId" = artist_data->>'artist_id';
 	END IF;
 
 	-- Update table Album in a foreach
@@ -209,8 +207,8 @@ $BODY$
 
 
 -- The trigger will be fired instead of an UPDATE statemen to save data
-CREATE TRIGGER v_artist_data_instead_update INSTEAD OF UPDATE
-	ON v_artist_data
+CREATE TRIGGER v_json_artist_data_instead_update INSTEAD OF UPDATE
+	ON v_json_artist_data
 	FOR EACH ROW
-	EXECUTE PROCEDURE trigger_v_artist_data_update()
+	EXECUTE PROCEDURE trigger_v_json_artist_data_update()
 ;
