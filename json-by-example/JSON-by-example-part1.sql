@@ -273,3 +273,39 @@ FROM json_artist_data
 WHERE (artist_data->>'artist_id')::int = 50
 ;
 
+
+
+
+
+
+-- Manipulate data with the concatenating / overwrite operator
+SELECT artist_data->>'artist_id' AS artist_id
+	, artist_data->>'artist' AS artist
+	, jsonb_set(artist_data, '{artist}', '"Whatever we want, it is just text"'::jsonb)->>'artist' AS new_artist
+	, artist_data || '{"artist":"Metallica"}'::jsonb->>'artist' AS correct_name
+FROM json_artist_data
+WHERE (artist_data->>'artist_id')::int = 50
+;
+
+
+
+
+
+
+-- Revert the name change of Metallica with in a different way: With the replace operator
+UPDATE json_artist_data
+SET artist_data = artist_data || '{"artist":"Metallica"}'::jsonb
+WHERE (artist_data->>'artist_id')::int = 50
+;
+
+
+
+
+
+
+-- View the changes done by the UPDATE statement
+SELECT artist_data->>'artist_id' AS artist_id
+	, artist_data->>'artist' AS artist
+FROM json_artist_data
+WHERE (artist_data->>'artist_id')::int = 50
+;
