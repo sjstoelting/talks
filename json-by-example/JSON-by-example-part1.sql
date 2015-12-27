@@ -257,7 +257,7 @@ WHERE (artist_data->>'artist_id')::int = 50
 
 -- Update a JSONB column with a jsonb_set result
 UPDATE json_artist_data
-SET artist_data= jsonb_set(artist_data, '{artist}', '"Metallica"'::jsonb)
+SET artist_data= jsonb_set(artist_data, '{artist}', '"NEW Metallica"'::jsonb)
 WHERE (artist_data->>'artist_id')::int = 50
 ;
 
@@ -272,3 +272,4 @@ SELECT artist_data->>'artist_id' AS artist_id
 FROM json_artist_data
 WHERE (artist_data->>'artist_id')::int = 50
 ;
+
