@@ -212,3 +212,63 @@ CREATE TRIGGER v_json_artist_data_instead_update INSTEAD OF UPDATE
 	FOR EACH ROW
 	EXECUTE PROCEDURE trigger_v_json_artist_data_update()
 ;
+
+
+
+
+
+-- DROP table json_artist_data CASCADE;
+-- Create a table based on the view to show additional JSONB functions
+CREATE TABLE json_artist_data(
+	id serial NOT NULL,
+	artist_data JSONB NOT NULL,
+	PRIMARY KEY (id)
+)
+;
+
+
+
+
+
+
+-- Insert the data from the previously created view
+INSERT INTO json_artist_data(artist_data)
+SELECT artist_data
+FROM v_json_artist_data
+;
+
+
+
+
+
+
+-- Manipulate data with jsonb_set
+SELECT artist_data->>'artist_id' AS artist_id
+	, artist_data->>'artist' AS artist
+	, jsonb_set(artist_data, '{artist}', '"Whatever we want, it is just text"'::jsonb)->>'artist' AS new_artist
+FROM json_artist_data
+WHERE (artist_data->>'artist_id')::int = 50
+;
+
+
+
+
+
+
+-- Update a JSONB column with a jsonb_set result
+UPDATE json_artist_data
+SET artist_data= jsonb_set(artist_data, '{artist}', '"Metallica"'::jsonb)
+WHERE (artist_data->>'artist_id')::int = 50
+;
+
+
+
+
+
+
+-- View the changes done by the UPDATE statement
+SELECT artist_data->>'artist_id' AS artist_id
+	, artist_data->>'artist' AS artist
+FROM json_artist_data
+WHERE (artist_data->>'artist_id')::int = 50
+;
