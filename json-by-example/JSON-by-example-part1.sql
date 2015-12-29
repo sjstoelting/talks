@@ -171,10 +171,10 @@ $BODY$
 	DECLARE v_context	TEXT;
 BEGIN
 	-- Update table Artist
-	IF OLD.artist_data->>'artist' <> NEW.artist_data->>'artist' THEN
+	IF (OLD.artist_data->>'artist')::varchar(120) <> (NEW.artist_data->>'artist')::varchar(120) THEN
 		UPDATE "Artist"
-		SET "Name" = NEW.artist_data->>'artist'
-		WHERE "ArtistId" = artist_data->>'artist_id';
+		SET "Name" = (NEW.artist_data->>'artist')::varchar(120)
+		WHERE "ArtistId" = (OLD.artist_data->>'artist_id')::int;
 	END IF;
 
 	-- Update table Album in a foreach
@@ -217,36 +217,12 @@ CREATE TRIGGER v_json_artist_data_instead_update INSTEAD OF UPDATE
 
 
 
--- DROP table json_artist_data CASCADE;
--- Create a table based on the view to show additional JSONB functions
-CREATE TABLE json_artist_data(
-	id serial NOT NULL,
-	artist_data JSONB NOT NULL,
-	PRIMARY KEY (id)
-)
-;
-
-
-
-
-
-
--- Insert the data from the previously created view
-INSERT INTO json_artist_data(artist_data)
-SELECT artist_data
-FROM v_json_artist_data
-;
-
-
-
-
-
 
 -- Manipulate data with jsonb_set
 SELECT artist_data->>'artist_id' AS artist_id
 	, artist_data->>'artist' AS artist
 	, jsonb_set(artist_data, '{artist}', '"Whatever we want, it is just text"'::jsonb)->>'artist' AS new_artist
-FROM json_artist_data
+FROM v_json_artist_data
 WHERE (artist_data->>'artist_id')::int = 50
 ;
 
@@ -256,7 +232,7 @@ WHERE (artist_data->>'artist_id')::int = 50
 
 
 -- Update a JSONB column with a jsonb_set result
-UPDATE json_artist_data
+UPDATE v_json_artist_data
 SET artist_data= jsonb_set(artist_data, '{artist}', '"NEW Metallica"'::jsonb)
 WHERE (artist_data->>'artist_id')::int = 50
 ;
@@ -269,7 +245,7 @@ WHERE (artist_data->>'artist_id')::int = 50
 -- View the changes done by the UPDATE statement
 SELECT artist_data->>'artist_id' AS artist_id
 	, artist_data->>'artist' AS artist
-FROM json_artist_data
+FROM v_json_artist_data
 WHERE (artist_data->>'artist_id')::int = 50
 ;
 
@@ -283,7 +259,7 @@ SELECT artist_data->>'artist_id' AS artist_id
 	, artist_data->>'artist' AS artist
 	, jsonb_set(artist_data, '{artist}', '"Whatever we want, it is just text"'::jsonb)->>'artist' AS new_artist
 	, artist_data || '{"artist":"Metallica"}'::jsonb->>'artist' AS correct_name
-FROM json_artist_data
+FROM v_json_artist_data
 WHERE (artist_data->>'artist_id')::int = 50
 ;
 
@@ -293,7 +269,7 @@ WHERE (artist_data->>'artist_id')::int = 50
 
 
 -- Revert the name change of Metallica with in a different way: With the replace operator
-UPDATE json_artist_data
+UPDATE v_json_artist_data
 SET artist_data = artist_data || '{"artist":"Metallica"}'::jsonb
 WHERE (artist_data->>'artist_id')::int = 50
 ;
@@ -306,6 +282,6 @@ WHERE (artist_data->>'artist_id')::int = 50
 -- View the changes done by the UPDATE statement
 SELECT artist_data->>'artist_id' AS artist_id
 	, artist_data->>'artist' AS artist
-FROM json_artist_data
+FROM v_json_artist_data
 WHERE (artist_data->>'artist_id')::int = 50
 ;
