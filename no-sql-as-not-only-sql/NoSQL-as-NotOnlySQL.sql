@@ -152,10 +152,10 @@ $BODY$
 	DECLARE v_context	TEXT;
 BEGIN
 	-- Update table Artist
-	IF OLD.artist_data->>'artist' <> NEW.artist_data->>'artist' THEN
+	IF (OLD.artist_data->>'artist')::varchar(120) <> (NEW.artist_data->>'artist')::varchar(120) THEN
 		UPDATE "Artist"
-		SET "Name" = NEW.artist_data->>'artist'
-		WHERE "ArtistId" = artist_data#>'{albums_tracks, 0, artist_id}';
+		SET "Name" = (NEW.artist_data->>'artist')::varchar(120)
+		WHERE "ArtistId" = (artist_data#>'{albums_tracks, 0, artist_id}')::int;
 	END IF;
 
 	-- Update table Album in a foreach
