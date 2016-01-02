@@ -154,8 +154,6 @@ ORDER BY 3
 
 
 
-
-
 -- DROP FUNCTION trigger_v_json_artist_data_update() CASCADE;
 -- Create a function, which will be used for UPDATE on the view v_artrist_data
 CREATE OR REPLACE FUNCTION trigger_v_json_artist_data_update()
@@ -213,6 +211,39 @@ CREATE TRIGGER v_json_artist_data_instead_update INSTEAD OF UPDATE
 	EXECUTE PROCEDURE trigger_v_json_artist_data_update()
 ;
 
+
+
+
+
+
+-- Convert albums to a recordset
+SELECT *
+FROM jsonb_to_recordset(
+	(
+		SELECT (artist_data->>'albums')::jsonb
+		FROM v_json_artist_data
+		WHERE (artist_data->>'artist_id')::int = 50
+	)
+) AS x(album_id int, artist_id int, album_title text, album_tracks jsonb)
+;
+
+
+
+
+
+
+-- Convert the tracks to a recordset
+SELECT album_id
+	, track_id
+	, track_name
+FROM jsonb_to_recordset(
+	(
+		SELECT artist_data#>'{albums, 1, album_tracks}'
+		FROM v_json_artist_data
+		WHERE (artist_data->>'artist_id')::int = 50
+	)
+) AS x(album_id int, track_id int, track_name text)
+;
 
 
 
@@ -285,3 +316,4 @@ SELECT artist_data->>'artist_id' AS artist_id
 FROM v_json_artist_data
 WHERE (artist_data->>'artist_id')::int = 50
 ;
+
