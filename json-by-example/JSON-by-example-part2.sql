@@ -43,8 +43,8 @@ SELECT review_jsonb#>> '{product,title}' AS title
     , avg((review_jsonb#>> '{review,rating}')::int) AS average_rating
 FROM reviews
 WHERE review_jsonb@>'{"product": {"category": "Sheet Music & Scores"}}'
-GROUP BY 1 
-ORDER BY 2 DESC
+GROUP BY title
+ORDER BY average_rating DESC
 ;
 
 
@@ -66,7 +66,7 @@ SELECT review_jsonb#>>'{product,category}' AS category
 	, avg((review_jsonb#>>'{review,rating}')::int) AS average_rating
 	, count((review_jsonb#>>'{review,rating}')::int) AS count_rating
 FROM reviews
-GROUP BY 1
+GROUP BY category
 ;
 
 
