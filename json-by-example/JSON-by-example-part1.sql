@@ -209,9 +209,9 @@ BEGIN
 		WHERE "ArtistId" = (OLD.artist_data->>'artist_id')::int;
 	END IF;
 
-	-- Update table Album in a foreach
+	-- Update table Album with an UPSERT
 
-	-- Update table Track in a foreach
+	-- Update table Track with an UPSERT
 
 	RETURN NEW;
 
