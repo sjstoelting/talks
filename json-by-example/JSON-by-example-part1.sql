@@ -60,6 +60,9 @@ WITH tracks AS
 		SELECT "AlbumId" AS album_id
 			, "TrackId" AS track_id
 			, "Name" AS track_name
+			, "MediaTypeId" AS media_type_id
+			, "Milliseconds" As milliseconds
+			, "UnitPrice" AS unit_price
 		FROM "Track"
 	)
 , json_tracks AS
@@ -142,11 +145,13 @@ WHERE artist_data->'albums' @> '[{"album_title":"Miles Ahead"}]'
 -- Array to records
 SELECT artist_data->>'artist_id' AS artist_id
 	, artist_data->>'artist' AS artist
-	, jsonb_array_elements(artist_data#>'{albums}')->>'album_title' AS album_title 
+	, jsonb_array_elements(artist_data#>'{albums}')->>'album_title' AS album_title
 	, jsonb_array_elements(jsonb_array_elements(artist_data#>'{albums}')#>'{album_tracks}')->>'track_name' AS song_titles
+	, jsonb_array_elements(jsonb_array_elements(artist_data#>'{albums}')#>'{album_tracks}')->>'track_id' AS song_id
 FROM v_json_artist_data
 WHERE artist_data->>'artist' = 'Metallica'
-ORDER BY 3
+ORDER BY album_title
+	, song_id
 ;
 
 
@@ -174,13 +179,16 @@ FROM jsonb_to_recordset(
 SELECT album_id
 	, track_id
 	, track_name
+	, media_type_id
+	, milliseconds
+	, unit_price
 FROM jsonb_to_recordset(
 	(
 		SELECT artist_data#>'{albums, 1, album_tracks}'
 		FROM v_json_artist_data
 		WHERE (artist_data->>'artist_id')::int = 50
 	)
-) AS x(album_id int, track_id int, track_name text)
+) AS x(album_id int, track_id int, track_name text, media_type_id int, milliseconds int, unit_price float)
 ;
 
 
