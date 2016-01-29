@@ -337,3 +337,17 @@ FROM v_json_artist_data
 WHERE (artist_data->>'artist_id')::int = 50
 ;
 
+
+
+
+
+
+-- Remove some data with the - operator
+SELECT jsonb_pretty(artist_data) AS complete
+	, jsonb_pretty(artist_data - 'albums') AS minus_albums
+	, jsonb_pretty(artist_data) = jsonb_pretty(artist_data - 'albums') AS is_different
+FROM v_json_artist_data
+WHERE artist_data->>'artist' IN ('Miles Davis', 'AC/DC')
+;
+
+
