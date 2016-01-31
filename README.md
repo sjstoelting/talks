@@ -22,3 +22,7 @@ It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI stan
 ## NoSQL as Not Only SQL
 The talk was don at Backend Berlin on December, 21st 2015 at (http://www.kaufda.de/) , see (http://www.meetup.com/de/backend/events/227266159/)
 The talk was about PostgreSQL No SQL and SQL features to get JSON from relational data.
+
+## JSON By Example
+I gave that talk at [FOSDEM](https://fosdem.org/2016/) on January, 31st 2015 in the PostgreSQL developer room.
+The talk covert PostgreSQL JSON features and included new functions and operators introduced in 9.5.
