@@ -92,7 +92,13 @@ SELECT  * FROM mysql_album;
 
 
 -- Join SQLite with MariaDB
-SE
+SELECT artist."Name"
+	, album."Title"
+FROM sqlite_artist AS artist
+INNER JOIN mysql_album AS album
+	ON artist."ArtistId" = album."ArtistId"
+;
+
 
 
 
