@@ -103,19 +103,6 @@ INNER JOIN mysql_album AS album
 
 
 
--- Join SQLite and MariaDB tables
-SELECT artist."Name"
-	, album."Title"
-FROM sqlite_artist AS artist
-INNER JOIN mysql_album AS album
-	ON artist."ArtistId" = album."ArtistId"
-;
-
-
-
-
-
-
 -- Select data from a different PostgreSQL database
 -- Should not work!
 SELECT * FROM chinook.public."Track";
