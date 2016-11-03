@@ -75,3 +75,11 @@ See [one-database-to-rule-em-all.froscon](https://github.com/sjstoelting/talks/t
 
 ### Data source used in this talk
 I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.
+
+## One Database to Rule 'em all (PostgreSQL Conference Europe 2016)
+The talk was done at [PostgreSQL Conference Europe](http://2016.pgconf.eu//) on the 4th of November 2016.  
+It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI standard SQL/MED.  
+See [one-database-to-rule-em-all.froscon](https://github.com/sjstoelting/talks/tree/master/one-database-to-rule-em-all.pgconfeu-2016)
+
+### Data source used in this talk
+I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.
