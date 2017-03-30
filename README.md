@@ -83,3 +83,12 @@ See [one-database-to-rule-em-all.froscon](https://github.com/sjstoelting/talks/t
 
 ### Data source used in this talk
 I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.
+
+## NoSQL The SQL Way (PostgreSQL User Group Berlin)
+I gave that talk at [Modern PostgreSQL](https://fosdem.org/2016/) on March, 30th 2017.  
+The talk covert PostgreSQL JSON features and included new functions and operators introduced in 9.5 and 9.6.  
+See [NoSQL The SQL Way](https://github.com/sjstoelting/talks/tree/master/NoSQL-The-SQL-Way)
+
+### Data source used in this talk
+I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.  
+I used the [Amazon Book Reviews 1998](http://examples.citusdata.com/customer_reviews_nested_1998.json.gz) published by [Citus Data](https://www.citusdata.com/).
