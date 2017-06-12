@@ -92,3 +92,11 @@ See [NoSQL The SQL Way](https://github.com/sjstoelting/talks/tree/master/NoSQL-T
 ### Data source used in this talk
 I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.  
 I used the [Amazon Book Reviews 1998](http://examples.citusdata.com/customer_reviews_nested_1998.json.gz) published by [Citus Data](https://www.citusdata.com/).
+
+## One Database to Rule 'em all (Berlin Buzzwords 2017)
+The talk was done at [Berlin Buzzwords 2017](https://berlinbuzzwords.de/) on the 12th of June 2017.  
+It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI standard SQL/MED.  
+See [one-database-to-rule-em-all.buzzwords-berlin-2017](https://github.com/sjstoelting/talks/tree/master/one-database-to-rule-em-all.buzzwords-berlin-2017)
+
+### Data source used in this talk
+I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.
