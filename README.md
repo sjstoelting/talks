@@ -100,3 +100,11 @@ See [one-database-to-rule-em-all.buzzwords-berlin-2017](https://github.com/sjsto
 
 ### Data source used in this talk
 I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.
+
+## One Database to Rule 'em all (Percona Live 2017, Dublin)
+The talk was done at [Percona Live Europe 2017, Dublin](https://www.percona.com/live/e17/) on the 12th of June 2017.  
+It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI standard SQL/MED.  
+See [one-database-to-rule-em-all.perconalive-dublin-2017](https://github.com/sjstoelting/talks/tree/master/one-database-to-rule-em-all.perconalive-dublin-2017)
+
+### Data source used in this talk
+I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.
