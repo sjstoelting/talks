@@ -1,5 +1,14 @@
 # Scripts and slides from my talks
 
+## NoSQL The SQL Way (Deutschsprachige PostgreSQL Konferenz 2018, Berlin)
+I gave that talk at [Deutschsprachige PostgreSQL Konferenz](http://2018.pgconf.de/) on April, 13th 2018.  
+The talk covert PostgreSQL JSON features and the new SQL/JSON ANSI standard. The slides are in German because I gave that talk in German.
+See [NoSQL The SQL Way](https://github.com/sjstoelting/talks/tree/master/NoSQL-The-SQL-Way.pgconf-de-2018)
+
+### Data source used in this talk
+I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.  
+I used the [Amazon Book Reviews 1998](http://examples.citusdata.com/customer_reviews_nested_1998.json.gz) published by [Citus Data](https://www.citusdata.com/).
+
 ## One Database to Rule 'em all (Percona Live 2017, Dublin)
 The talk was done at [Percona Live Europe 2017, Dublin](https://www.percona.com/live/e17/) on the 12th of June 2017.  
 It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI standard SQL/MED.  
