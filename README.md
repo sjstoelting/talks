@@ -6,7 +6,7 @@ The talk covert PostgreSQL JSON features and the new SQL/JSON ANSI standard. The
 See [NoSQL The SQL Way](https://github.com/sjstoelting/talks/tree/master/NoSQL-The-SQL-Way.pgconf-de-2018)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.  
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.  
 I used the [Amazon Book Reviews 1998](http://examples.citusdata.com/customer_reviews_nested_1998.json.gz) published by [Citus Data](https://www.citusdata.com/).
 
 ## One Database to Rule 'em all (Percona Live 2017, Dublin)
@@ -15,7 +15,7 @@ It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI stan
 See [one-database-to-rule-em-all.perconalive-dublin-2017](https://github.com/sjstoelting/talks/tree/master/one-database-to-rule-em-all.perconalive-dublin-2017)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.
 
 ## One Database to Rule 'em all (Berlin Buzzwords 2017)
 The talk was done at [Berlin Buzzwords 2017](https://berlinbuzzwords.de/) on the 12th of June 2017.  
@@ -23,7 +23,7 @@ It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI stan
 See [one-database-to-rule-em-all.buzzwords-berlin-2017](https://github.com/sjstoelting/talks/tree/master/one-database-to-rule-em-all.buzzwords-berlin-2017)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.
 
 ## NoSQL The SQL Way (PostgreSQL User Group Berlin)
 I gave that talk at [Modern PostgreSQL](https://fosdem.org/2016/) on March, 30th 2017.  
@@ -31,7 +31,7 @@ The talk covert PostgreSQL JSON features and included new functions and operator
 See [NoSQL The SQL Way](https://github.com/sjstoelting/talks/tree/master/NoSQL-The-SQL-Way)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.  
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.  
 I used the [Amazon Book Reviews 1998](http://examples.citusdata.com/customer_reviews_nested_1998.json.gz) published by [Citus Data](https://www.citusdata.com/).
 
 ## One Database to Rule 'em all (PostgreSQL Conference Europe 2016)
@@ -40,7 +40,7 @@ It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI stan
 See [one-database-to-rule-em-all.froscon](https://github.com/sjstoelting/talks/tree/master/one-database-to-rule-em-all.pgconfeu-2016)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.
 
 ## One Database to Rule 'em all (FrOSCon 2016)
 The talk was done at [FrOSCon](https://www.froscon.de/) on the 21st of August 2016.  
@@ -48,7 +48,7 @@ It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI stan
 See [one-database-to-rule-em-all.froscon](https://github.com/sjstoelting/talks/tree/master/one-database-to-rule-em-all.froscon)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.
 
 ## The PostgreSQL JSON Feature Tour (FrOSCon 2016)
 I gave that talk at [FrOSCon](https://www.froscon.de/) on the 20th of August 2016.  
@@ -56,7 +56,7 @@ The talk covert PostgreSQL JSON features and included new functions and operator
 See [no-sql-as-not-only-sql-froscon-2016](https://github.com/sjstoelting/talks/tree/master/no-sql-as-not-only-sql-froscon-2016)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.  
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.  
 I used the [Amazon Book Reviews 1998](http://examples.citusdata.com/customer_reviews_nested_1998.json.gz) published by [Citus Data](https://www.citusdata.com/).
 
 ## The PostgreSQL JSON Feature Tour (5432...MeetUs! 2016)
@@ -65,7 +65,7 @@ The talk covert PostgreSQL JSON features and included new functions and operator
 See [the-postgresql-json-feature-tour](https://github.com/sjstoelting/talks/tree/master/the-postgresql-json-feature-tour)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.  
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.  
 I used the [Amazon Book Reviews 1998](http://examples.citusdata.com/customer_reviews_nested_1998.json.gz) published by [Citus Data](https://www.citusdata.com/).
 
 ## JSON By Example (FOSDEM 2016)
@@ -74,7 +74,7 @@ The talk covert PostgreSQL JSON features and included new functions and operator
 See [json-by-example](https://github.com/sjstoelting/talks/tree/master/json-by-example)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.  
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.  
 I used the [Amazon Book Reviews 1998](http://examples.citusdata.com/customer_reviews_nested_1998.json.gz) published by [Citus Data](https://www.citusdata.com/).
 
 ## JSON By Example
@@ -83,7 +83,7 @@ The talk covert PostgreSQL JSON features and included new functions and operator
 See [json-by-example](https://github.com/sjstoelting/talks/tree/master/json-by-example)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.  
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.  
 I used the [Amazon Book Reviews 1998](http://examples.citusdata.com/customer_reviews_nested_1998.json.gz) published by [Citus Data](https://www.citusdata.com/).
 
 ## NoSQL as Not Only SQL
@@ -92,7 +92,7 @@ The talk was about PostgreSQL No SQL and SQL features to get JSON from relationa
 See [no-sql-as-not-only-sql](https://github.com/sjstoelting/talks/tree/master/no-sql-as-not-only-sql)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.  
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.  
 I used the [Amazon Book Reviews 1998](http://examples.citusdata.com/customer_reviews_nested_1998.json.gz) published by [Citus Data](https://www.citusdata.com/).  
 
 ## One Database To Rule 'em All
@@ -101,7 +101,7 @@ It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI stan
 See [one-database-to-rule-em-all](https://github.com/sjstoelting/talks/tree/master/one-database-to-rule-em-all)
 
 ### Data source used in this talk
-I used the [Chinook Database](http://chinookdatabase.codeplex.com/) as data base.
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.
 
 ## JSON By The Other Elephant
 The talk was done at the [PHP Usergroup Berlin](http://www.bephpug.de/2015/07/07/july.html) on the 7th of July 2015.  
