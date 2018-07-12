@@ -129,7 +129,7 @@ INNER JOIN pg96."Track" AS track
 
 
 
-DROP EXTENSI,,,,ON IF EXISTS file_fdw CASCADE;
+DROP EXTENSION IF EXISTS file_fdw CASCADE;
 -- Create the fi
 CREATE EXTENSION file_fdw;
 
