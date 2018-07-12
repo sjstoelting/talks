@@ -1,7 +1,15 @@
 # Scripts and slides from my talks
 
+## PostgreSQL As Data Integration Tool (PGDay Amsterdam 2018, Amsterdam)
+The talk was done at [PGDay Amsterdam 2018](http://pgday.amsterdam/) on the 12th of July 2018.
+It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI standard SQL/MED.
+See [PostgreSQL As Data Integration Tool](https://github.com/sjstoelting/talks/tree/master/postgresql-as-data-integration-tool-pgday-amsterdam-2018)
+
+### Data source used in this talk
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.
+
 ## NoSQL The SQL Way (Prague PostgreSQL Meetup, Prague)
-I gave that talk at [Prague PostgreSQL Meetup](https://www.meetup.com/de-DE/Prague-PostgreSQL-Meetup/) on June, 25th 2018.  
+I gave that talk at [Prague PostgreSQL Meetup](https://www.meetup.com/de-DE/Prague-PostgreSQL-Meetup/) on June, 25th 2018.
 The talk covert PostgreSQL JSON features with examples. The slides are in English.
 See [NoSQL The SQL Way](https://github.com/sjstoelting/talks/tree/master/NoSQL-The-SQL-Way.Meetup-Prague-2018)
 
