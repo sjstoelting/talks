@@ -21,7 +21,7 @@ CREATE SERVER sqlite_server
 -- Create the SQLite foreign table, column definitions have to match
 CREATE FOREIGN TABLE sqlite_artist(
 	"ArtistId" integer,
-	"Name" character varying(120)
+	"Name" text
 )
 SERVER sqlite_server
 OPTIONS(
@@ -107,7 +107,7 @@ INTO pg96
 
 
 -- Try to select some data
-SELECT * FROM "Track";
+SELECT * FROM pg96."Track";
 
 
 
@@ -247,11 +247,11 @@ CREATE SERVER rss_srv foreign data wrapper multicorn options (
 
 
 CREATE FOREIGN TABLE rss_mi2nbandnews (
-	title CHARACTER VARYING,	
-	link CHARACTER VARYING,
-	description CHARACTER VARYING,
+	title text,
+	link text,
+	description text,
 	"pubDate" TIMESTAMPTZ,
-	guid CHARACTER VARYING
+	guid text
 ) server rss_srv OPTIONS (
 	url 'http://feeds.feedburner.com/mi2nbandnews'
 )
@@ -281,11 +281,11 @@ INNER JOIN sqlite_artist AS a
 
 -- Create a foreign table based on an RSS feed
 CREATE FOREIGN TABLE rss_postgresql_events (
-	title CHARACTER VARYING,	
-	link CHARACTER VARYING,
-	description CHARACTER VARYING,
+	title text,
+	link text,
+	description text,
 	"pubDate" TIMESTAMPTZ,
-	guid CHARACTER VARYING
+	guid text
 ) server rss_srv OPTIONS (
 	url 'https://www.postgresql.org/events.rss'
 )
@@ -300,8 +300,7 @@ SELECT title
 	, "pubDate"::DATE AS "Conference Start Date"
 	, description
 FROM rss_postgresql_events
-WH
-ERE "pubDate"::DATE > NOW()::DATE
+WHERE "pubDate"::DATE > NOW()::DATE
 ORDER BY "pubDate" ASC
 ;
 
