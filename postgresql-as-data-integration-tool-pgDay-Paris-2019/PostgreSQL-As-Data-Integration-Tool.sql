@@ -1,3 +1,19 @@
+/**
+ * The script is part of the talk "PostgreSQL As Data Integration Tool"
+ * given at PGDay Paris 2019.
+ * 
+ * The following extensions are needed:
+ * - sqlite_fdw: https://pgxn.org/dist/sqlite_fdw/
+ * - mysql_fdw:  https://github.com/EnterpriseDB/mysql_fdw
+ * - file_fdw:   https://www.postgresql.org/docs/current/file-fdw.html
+ * - multicorn   https://multicorn.org
+ * - pg_cron     https://github.com/citusdata/pg_cron
+ * 
+ * Author:  Stefanie Janine Stölting, mail@stefanie-stoelting.de
+ * License: Creative Commons Attribution 4.0 International
+ *          http://creativecommons.org/licenses/by/4.0/
+ */
+
 DROP EXTENSION IF EXISTS sqlite_fdw CASCADE;
 -- Create the SQLite foreign data wrapper extension in the current database
 CREATE EXTENSION sqlite_fdw;
@@ -661,7 +677,6 @@ FROM mv_rss_music_newslists AS r
 
 
 -- Installing the pg_cron extension to schedule jobs in PostgreSQL
--- https://github.com/citusdata/pg_cron
 DROP EXTENSION IF EXISTS pg_cron;
 CREATE EXTENSION pg_cron;
 
