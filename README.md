@@ -1,5 +1,10 @@
 # Scripts and slides from my talks
 
+## PostgreSQL As Data Integration Tool (PGDay Paris 2019, Paris)
+The talk was done at [PGDay Amsterdam 2018](http://pgday.amsterdam/) on the 12th of July 2018.
+It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI standard SQL/MED.
+See [PostgreSQL As Data Integration Tool](https://github.com/sjstoelting/talks/tree/master/postgresql-as-data-integration-tool-pgDay-Paris-2019)
+
 ## PostgreSQL As Data Integration Tool (PGDay Amsterdam 2018, Amsterdam)
 The talk was done at [PGDay Amsterdam 2018](http://pgday.amsterdam/) on the 12th of July 2018.
 It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI standard SQL/MED.
