@@ -1,5 +1,14 @@
 # Scripts and slides from my talks
 
+## PostgreSQL JSON Features - Heute und in der Zukunft (PGDay Austria, Wiener Neustadt)
+I gave that talk at [PGDay Austria](https://pgday.at/) on september, 6th 2019.
+The talk covert PostgreSQL JSON features with examples. The slides are in German.
+See [PostgreSQL JSON Features - Heute und in der Zukunft](PostgreSQL-JSON-Features-Heute-und-in-der-Zukunft)
+
+### Data source used in this talk
+I used the [Chinook Database](https://github.com/lerocha/chinook-database) as data base.
+I used the [Amazon Book Reviews 1998](http://examples.citusdata.com/customer_reviews_nested_1998.json.gz) published by [Citus Data](https://www.citusdata.com/).
+
 ## PostgreSQL As Data Integration Tool (PGDay Paris 2019, Paris)
 The talk was done at [PGDay Paris 2019](https://2019.pgday.paris/) on the 12th of July 2018.
 It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI standard SQL/MED.
