@@ -17,3 +17,11 @@ The talk will walk you through the definition of Foreign Data Wrapper as impleme
 In the second part of the talk you will see how this technology does work shown by examples with several data sources.
 
 In addition it will cover how I ended up bringing some Foreign Data Wrappers alive again.
+
+# Time Traveling PostgreSQL
+
+Until PostgreSQL 6.2 had time travel implemented in its core. It has been removed in PostgreSQL 6.3.
+
+But it can be implemented with PostgreSQL methods by adding some triggers. As that can result in big tables, when there are many updates, this can be solved with partitioned tables.
+
+In this talk I would explain what is needed and how to implement time travel into PostgreSQL again. The code to implement is is shown live on stage with examples and will be available afterwards for everyone.
