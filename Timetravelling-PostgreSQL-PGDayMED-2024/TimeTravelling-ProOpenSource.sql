@@ -1,8 +1,8 @@
 /**
  * SQL script about PostgreSQL timetravel.
- * 
+ *
  * Talk at PGDay/MED 2024: Time Travelling PostgreSQL
- * 
+ *
  * Author: Stefanie Janine Stölting, Stefanie@ProOpenSource.eu
  */
 
@@ -48,13 +48,13 @@ CREATE TABLE timetravel (
 
 
 -- Creating indexes
-CREATE INDEX timetravel_changed_idx 
+CREATE INDEX timetravel_changed_idx
   ON timetravel
   USING gist
   (changed)
 ;
 
-CREATE INDEX timetravel_timetravelid_fk_idx 
+CREATE INDEX timetravel_timetravelid_fk_idx
   ON timetravel
   USING btree
   (timetravelid)
@@ -70,7 +70,7 @@ CREATE INDEX timetravel_not_deleted_idx
 
 
 -- This table is needed to handle partition information.
--- It will later be used to check, if a partition has to be created 
+-- It will later be used to check, if a partition has to be created
 CREATE TABLE timetravel_part_vals (
   part_year SMALLINT NOT NULL,
   start_value TIMESTAMP WITH TIME ZONE NOT NULL,
@@ -92,7 +92,7 @@ $$
 DECLARE
   query TEXT;
   in_range BOOLEAN = FALSE;
-  year_p SMALLINT; 
+  year_p SMALLINT;
   start_v TIMESTAMP WITH TIME ZONE;
   end_v TIMESTAMP WITH TIME ZONE;
   part_name TEXT;
@@ -117,24 +117,24 @@ BEGIN
     -- Create a new partition
     part_name := 'timetravel_' || year_p::TEXT;
 
-    EXECUTE 'CREATE TABLE ' || part_name || 
+    EXECUTE 'CREATE TABLE ' || part_name ||
       ' PARTITION OF timetravel FOR VALUES FROM (''' || start_v::text || ''') TO (''' || end_v::text || ''')';
 
     RAISE NOTICE 'Partition % created.', part_name;
-    
+
   END IF;
 END;
 $$
+;
 
-  
 
 -- Create the partition for the current year
 SELECT timetravel_partition (now());
 
 
 
-  
-  
+
+
 -- Trigger function for inserts and updates
 CREATE OR REPLACE FUNCTION trigger_timetravel_in_upd ()
   RETURNS TRIGGER
@@ -146,7 +146,7 @@ BEGIN
   NEW.deleted = false;
   NEW.changed = tstzrange(clock_timestamp(), 'INFINITY', '[)');
 
-  -- On UPDATE a new record is inserted 
+  -- On UPDATE a new record is inserted
   CASE WHEN TG_OP = 'UPDATE' THEN
 
     IF NEW.timetravelid <> OLD.timetravelid THEN
@@ -191,6 +191,7 @@ BEGIN
   END CASE;
 END;
 $$
+;
 
 -- Attach the trigger function for inserts
 CREATE OR REPLACE TRIGGER timetravel_insert
@@ -203,14 +204,14 @@ CREATE OR REPLACE TRIGGER timetravel_insert
 
 -- Attach the trigger function for updates
 CREATE OR REPLACE TRIGGER timetravel_update
-  BEFORE UPDATE 
+  BEFORE UPDATE
   ON timetravel
   FOR EACH ROW
   EXECUTE PROCEDURE trigger_timetravel_in_upd()
 ;
 
 
--- The trigger inserts two records, one with the old data but with an end 
+-- The trigger inserts two records, one with the old data but with an end
 -- timestamp in column changed, one with deleted = true but end timestamp
 -- is INFINITY
 CREATE OR REPLACE FUNCTION trigger_timetravel_del ()
@@ -253,6 +254,7 @@ BEGIN
   END IF;
 END;
 $$
+;
 
 -- Attach the trigger function for deletions
 CREATE OR REPLACE TRIGGER timetravel_delete
@@ -440,9 +442,10 @@ BEGIN
   RETURN NEW;
 END;
 $$
+;
 
 -- Attach the trigger function to the view
-CREATE OR REPLACE TRIGGER timetravel_v_trigger 
+CREATE OR REPLACE TRIGGER timetravel_v_trigger
 	INSTEAD OF INSERT OR UPDATE OR DELETE
 	ON timetravel_v
 	FOR EACH ROW

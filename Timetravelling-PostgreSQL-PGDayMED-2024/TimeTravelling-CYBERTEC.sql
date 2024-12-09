@@ -1,8 +1,8 @@
 /**
  * SQL script about PostgreSQL timetravel.
- * 
+ *
  * Blog post: https://ProOpenSource.it/blog/postgresql-time-travel
- * 
+ *
  * Author: Hans-Jürgen Schönig
  * Author: Stefanie Janine Stölting, Stefanie@ProOpenSource.eu
  * Origin: https://www.cybertec-postgresql.com/en/implementing-as-of-queries-in-postgresql/
@@ -18,7 +18,7 @@ SET SEARCH_PATH TO asof;
 
 -- Orginal code from the blog post
 CREATE EXTENSION IF NOT EXISTS btree_gist;
- 
+
 CREATE TABLE t_object
 (
 	id		int8,
@@ -38,7 +38,7 @@ CREATE VIEW t_object_recent AS
 	WHERE 	current_timestamp <@ VALID
 ;
 
-SELECT * 
+SELECT *
 FROM t_object_recent
 ;
 
@@ -157,8 +157,9 @@ BEGIN
 	END IF;
 END;
 $$
+;
 
- 
+
 CREATE TRIGGER object_trig
 	INSTEAD OF INSERT OR UPDATE OR DELETE
 	ON t_object_recent
@@ -177,13 +178,13 @@ SELECT s
 FROM generate_series(1, 100000) s(i)
 ;
 
--- The view does not contain the timestamp, 
+-- The view does not contain the timestamp,
 -- when the data has been changed
 SELECT min(lower(valid)) AS min_date_from
 	, max(lower(valid)) AS max_date_from
 	, count(*) AS count_of
 FROM t_object
-; 
+;
 
 
 -- Update existing records
