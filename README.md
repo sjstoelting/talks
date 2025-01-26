@@ -1,5 +1,10 @@
 # Scripts and slides from my talks
 
+## PostgreSQL Books
+
+Lightning talk given at [FOSDEM PGDay 2025](https://2025.fosdempgday.org/) on January 31th 2025 in Brussels, Belgium.
+The lightning talk covered my personal PostgreSQL book recommendations with links where to get the books. The slides are in English.
+
 ## Time Traveling PostgreSQL
 
 That talk was given at [PGDay/MED 2024](https://2024.pgdaymed.org/) on December 5th 2024 in Naples, Italy. 
