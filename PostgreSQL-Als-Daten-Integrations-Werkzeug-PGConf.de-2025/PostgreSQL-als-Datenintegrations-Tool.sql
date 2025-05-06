@@ -161,7 +161,7 @@ WHERE "TrackId" = 6;
 
 -- Daten anzeigen
 SELECT *
-FROM pg14."Track" SET
+FROM pg14."Track"
 WHERE "TrackId" = 6;
 
 
@@ -193,7 +193,7 @@ WHERE "TrackId" = 6;
 
 
 DROP EXTENSION IF EXISTS file_fdw CASCADE;
--- Die file extension anlegen
+-- Die file Extension anlegen
 CREATE EXTENSION file_fdw;
 
 
@@ -238,7 +238,8 @@ SELECT * FROM csv.genre;
 
 
 
--- Join SQLite, two PostgreSQL servers, and a CSV tables
+-- Daten joinen aus SQLite, zwei PostgreSQL Servern, und
+-- einer CSV Datei
 SELECT artist."Name"
 	, album.title
 	, track."Name"
@@ -259,7 +260,7 @@ INNER JOIN csv.genre AS genre
 
 
 DROP MATERIALIZED VIEW IF EXISTS mv_album_artist;
--- Creates an materialized view on foreign tables
+-- Legt einen Materialized View mit Foreign Tables an
 CREATE MATERIALIZED VIEW mv_album_artist AS
 WITH album AS
 	(
@@ -458,8 +459,14 @@ LANGUAGE plpgsql
 -- Einen Cron Job in PostgreSQL anlegen um den Materialized View
 -- jede Minute automatisch zu aktulisieren
 INSERT INTO cron.job (schedule, command, nodename, nodeport, database, username)
-VALUES ('* * * * *', 'CALL refresh_every_minute()', '', 5435, 'chinook', 'postgres')
-;
+VALUES (
+	'* * * * *',
+	'CALL refresh_every_minute()',
+	'',
+	5435,
+	'chinook',
+	'postgres'
+);
 
 
 
@@ -473,7 +480,7 @@ FROM cron.job;
 
 
 
---
+-- Die Ausführungen der Jobs anzeigen
 SELECT *
 FROM cron.log;
 
@@ -495,8 +502,7 @@ CREATE FOREIGN TABLE multicorn.rss_postgresql_events (
 	guid text
 ) server rss_srv OPTIONS (
 	url 'https://www.postgresql.org/events.rss'
-)
-;
+);
 
 
 
