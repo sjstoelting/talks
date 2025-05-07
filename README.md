@@ -1,5 +1,10 @@
 # Scripts and slides from my talks
 
+## PostgreSQL Als Daten Integrationswerkzeug
+
+The talk was given in German at the [German PostgreSQL Conference 2025](https://2025.pgconf.de/) on May 8th 2025 in Berlin, Germany.
+PostgreSQL foreign data wrappers and their usage has been covered.
+
 ## PostgreSQL Books
 
 Lightning talk given at [FOSDEM PGDay 2025](https://2025.fosdempgday.org/) on January 31th 2025 in Brussels, Belgium.
@@ -7,7 +12,7 @@ The lightning talk covered my personal PostgreSQL book recommendations with link
 
 ## Time Traveling PostgreSQL
 
-That talk was given at [PGDay/MED 2024](https://2024.pgdaymed.org/) on December 5th 2024 in Naples, Italy. 
+That talk was given at [PGDay/MED 2024](https://2024.pgdaymed.org/) on December 5th 2024 in Naples, Italy.
 The talk covered who to go back in time on data without any extensions, only with trigger functions. The slides are in English, the source code is available as SQL file.
 
 ## PostgreSQL JSON Features - Heute und in der Zukunft (PGDay Austria, Wiener Neustadt)
