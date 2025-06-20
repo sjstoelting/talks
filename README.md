@@ -1,5 +1,10 @@
 # Scripts and slides from my talks
 
+## PostgreSQL As Data Integration Tool (Berlin PostgreSQL User Group, 2025-06-19, Berlin)
+
+It was about PostgreSQL Foreign Data Wrapper(FDW) as described in the  ANSI standard SQL/MED.
+See [PostgreSQL As Data Integration Tool](PostgreSQL-Als-Daten-Integrations-Werkzeug-PGConf-Meetup-Berlin-2025)
+
 ## PostgreSQL Als Daten Integrationswerkzeug
 
 The talk was given in German at the [German PostgreSQL Conference 2025](https://2025.pgconf.de/) on May 8th 2025 in Berlin, Germany.
